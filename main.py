@@ -2,13 +2,16 @@ from fastapi import FastAPI
 import mysql.connector
 from fastapi.middleware.cors import CORSMiddleware
 import os
-app = FastAPI()
+from dotenv import load_dotenv
+app = FastAPI()   
 
+load_dotenv()
 
 
 # ======================================================
-# CORS POLICY
+# CORS POLICY 
 # ======================================================
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],     # Allow All Frontends
