@@ -89,7 +89,7 @@ def get_expenses():
     query = """
     SELECT *
     FROM expenses
-    ORDER BY expense_id DESC
+    ORDER BY expense_date DESC
     """
 
     cursor.execute(query)
