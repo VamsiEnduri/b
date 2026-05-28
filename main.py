@@ -82,121 +82,121 @@ def add_expense(payload: dict):
     }
 
 
-# -------------------- Get All Expenses --------------------
-@app.get("/get_expenses")
-def get_expenses():
+# # -------------------- Get All Expenses --------------------
+# @app.get("/get_expenses")
+# def get_expenses():
 
-    query = """
-    SELECT *
-    FROM expenses
-    ORDER BY expense_date DESC
-    """
+#     query = """
+#     SELECT *
+#     FROM expenses
+#     ORDER BY expense_date DESC
+#     """
 
-    cursor.execute(query)
+#     cursor.execute(query)
 
-    data = cursor.fetchall()
+#     data = cursor.fetchall()
 
-    return {
-        "expenses": data
-    }
-
-
-
-
-# -------------------- Get Single Expense --------------------
-@app.get("/get_single_expense/{expense_id}")
-def get_single_expense(expense_id: int):
-
-    query = """
-    SELECT *
-    FROM expenses
-    WHERE expense_id = %s
-    """
-
-    cursor.execute(query, (expense_id,))
-
-    data = cursor.fetchone()
-
-    if data:
-        return {
-            "expense": data
-        }
-
-    return {
-        "message": "Expense Not Found"
-    }
-
-
-# -------------------- Update Expense --------------------
-@app.put("/update_expense/{expense_id}")
-def update_expense(expense_id: int, payload: dict):
-
-    query = """
-    UPDATE expenses
-    SET
-        title=%s,
-        amount=%s,
-        category=%s,
-        payment_method=%s,
-        expense_date=%s,
-        description=%s
-    WHERE expense_id=%s
-    """
-
-    values = (
-        payload["title"],
-        payload["amount"],
-        payload["category"],
-        payload["payment_method"],
-        payload["expense_date"],
-        payload["description"],
-        expense_id
-    )
-
-    cursor.execute(query, values)
-    conn.commit()
-
-    return {
-        "message": "Expense Updated Successfully"
-    }
+#     return {
+#         "expenses": data
+#     }
 
 
 
 
-# -------------------- Delete Expense --------------------
-@app.delete("/delete_expense/{expense_id}")
-def delete_expense(expense_id: int):
+# # -------------------- Get Single Expense --------------------
+# @app.get("/get_single_expense/{expense_id}")
+# def get_single_expense(expense_id: int):
 
-    query = """
-    DELETE FROM expenses
-    WHERE expense_id=%s
-    """
+#     query = """
+#     SELECT *
+#     FROM expenses
+#     WHERE expense_id = %s
+#     """
 
-    cursor.execute(query, (expense_id,))
-    conn.commit()
+#     cursor.execute(query, (expense_id,))
 
-    return {
-        "message": "Expense Deleted Successfully"
-    }
+#     data = cursor.fetchone()
+
+#     if data:
+#         return {
+#             "expense": data
+#         }
+
+#     return {
+#         "message": "Expense Not Found"
+#     }
+
+
+# # -------------------- Update Expense --------------------
+# @app.put("/update_expense/{expense_id}")
+# def update_expense(expense_id: int, payload: dict):
+
+#     query = """
+#     UPDATE expenses
+#     SET
+#         title=%s,
+#         amount=%s,
+#         category=%s,
+#         payment_method=%s,
+#         expense_date=%s,
+#         description=%s
+#     WHERE expense_id=%s
+#     """
+
+#     values = (
+#         payload["title"],
+#         payload["amount"],
+#         payload["category"],
+#         payload["payment_method"],
+#         payload["expense_date"],
+#         payload["description"],
+#         expense_id
+#     )
+
+#     cursor.execute(query, values)
+#     conn.commit()
+
+#     return {
+#         "message": "Expense Updated Successfully"
+#     }
 
 
 
-# -------------------- Expense Summary --------------------
-@app.get("/expense_summary")
-def expense_summary():
 
-    query = """
-    SELECT
-        category,
-        SUM(amount) as total_amount
-    FROM expenses
-    GROUP BY category
-    """
+# # -------------------- Delete Expense --------------------
+# @app.delete("/delete_expense/{expense_id}")
+# def delete_expense(expense_id: int):
 
-    cursor.execute(query)
+#     query = """
+#     DELETE FROM expenses
+#     WHERE expense_id=%s
+#     """
 
-    data = cursor.fetchall()
+#     cursor.execute(query, (expense_id,))
+#     conn.commit()
 
-    return {
-        "summary": data
-    }
+#     return {
+#         "message": "Expense Deleted Successfully"
+#     }
+
+
+
+# # -------------------- Expense Summary --------------------
+# @app.get("/expense_summary")
+# def expense_summary():
+
+#     query = """
+#     SELECT
+#         category,
+#         SUM(amount) as total_amount
+#     FROM expenses
+#     GROUP BY category
+#     """
+
+#     cursor.execute(query)
+
+#     data = cursor.fetchall()
+
+#     return {
+#         "summary": data
+#     }
